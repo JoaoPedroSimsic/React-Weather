@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { HiOutlineSearch, HiOutlineX } from 'react-icons/hi';
+import { HiOutlineSearch, HiOutlineX, HiArrowSmRight } from 'react-icons/hi';
 
-const Menu = () => {
+const Menu = ({ value }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [input, setInput] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    value(input);
+    setIsOpen(false);
+  };
 
   const toggleSearch = () => {
     setIsOpen(!isOpen);
-    console.log(isOpen);
   };
 
   return (
@@ -28,12 +35,25 @@ const Menu = () => {
         </button>
 
         {isOpen && (
-          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 md:w-1/3 p-2 bg-white shadow-lg rounded-full flex items-center transition-all z-20">
+          <form className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 md:w-1/3 p-2 bg-white shadow-lg rounded-full flex items-center transition-all z-20">
             <input
               type="text"
-              className="font-roboto font-bold w-2/3 rounded-full outline-none text-black p-1 focus:ring-2 focus:ring-blue-500"
+              className="font-roboto font-bold w-full rounded-full outline-none text-gray-500 p-1"
+              placeholder="Enter a city"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSubmit(e);
+              }}
             />
-          </div>
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="text-gray-500 p-1 hover:bg-gray-200 rounded-full transition-all duration-200 active:scale-80"
+            >
+              <HiArrowSmRight size={30} />
+            </button>
+          </form>
         )}
       </div>
     </div>
