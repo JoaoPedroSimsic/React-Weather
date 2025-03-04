@@ -52,17 +52,31 @@ const Dashboard = () => {
     >
       <Menu value={handleSearchSubmit} />
 
-      {loading && <div className="text-white">Loading...</div>}
-      {error && <div className="text-red-500">{error}</div>}
+      {loading && (
+        <div className="absolute flex items-center justify-center text-blue-400 bg-white py-2 px-5 rounded-lg font-roboto font-bold">
+          Loading...
+        </div>
+      )}
+      {error && (
+        <div className="absolute flex items-center justify-center text-white bg-red-500 py-2 px-5 rounded-lg font-roboto font-bold">
+          {error}
+        </div>
+      )}
 
       {weatherData && (
-        <div>
-          <h2 text-xl font-bold>
+        <div className="flex flex-col space-y-4 justify-center items-center">
+          <h1 className="mb-20 text-5xl font-bold font-roboto text-white text-center">
             {weatherData.name}
-          </h2>
-          <p>{Math.round(weatherData.main.temp)}</p>
-          <p>{weatherData.weather[0].description}</p>
-          <p>{weatherData.main.humidity}</p>
+          </h1>
+          <p className="font-bold font-roboto text-white text-2xl text-center">
+            temperature: {Math.round(weatherData.main.temp)} °C
+          </p>
+          <p className="font-bold font-roboto text-white text-2xl text-center">
+            description: {weatherData.weather[0].description}
+          </p>
+          <p className="font-bold font-roboto text-white text-2xl text-center">
+            humidity: {weatherData.main.humidity}
+          </p>
         </div>
       )}
     </div>
